@@ -25,12 +25,15 @@ def upload_to_s3(file_path,bucket_name):
 
     
 
-def create_s3_bucket():
+def create_s3_bucket(file):
     try:
-        response=client.create_bucket(Bucket='ez-media-enhance-dev')
+        file=input("Name of file :")
+        upload_file_bucket='ez-media-enhance-dev'
+        upload_file_key="enahnce-input/"+str(file)
+        response=client.upload_file(file, upload_file_bucket,upload_file_key)
 
         if response["ResponseMetadata"]["HTTPStatusCode"]==200:
-            logging.logger("INFO","Bucket Created Successfully")
+            logging.logger("INFO","File Transferred Successfully")
         else:
             logging.logger("DEBUG","Bucket Not Created!!")
     except botocore.exceptions.ClientError as error:
